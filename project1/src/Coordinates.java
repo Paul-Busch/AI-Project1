@@ -1,4 +1,3 @@
-
 public class Coordinates implements Cloneable {
 	
 	public int x;
@@ -12,17 +11,13 @@ public class Coordinates implements Cloneable {
 		Coordinates c = (Coordinates)o;
 		return c.x == x && c.y == y;
 	}
-	
-	public int hashCode() {
-		return x ^ y + x*31 + y*53;
-	}
-
+	// TODO if really necessary
 	public Object clone() {
 		try {
 			return super.clone();
 		} catch (CloneNotSupportedException e) { return null; }
 	}
-
+	// TODO dont know if needed
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}
