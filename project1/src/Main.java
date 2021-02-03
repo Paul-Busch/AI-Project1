@@ -1,6 +1,6 @@
 
 public class Main {
-	
+	//Laura
 	/**
 	 * starts the game player and waits for messages from the game master <br>
 	 * Command line options: [port]
