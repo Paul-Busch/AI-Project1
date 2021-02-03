@@ -3,18 +3,19 @@ public class MyAgent {
 	private String role; // the name of this agent's role (white or black)
 	private int playclock; // this is how much time (in seconds) we have before nextAction needs to return a move
 	private boolean myTurn; // whether it is this agent's turn or not
-	private int sizeX, sizeY; // dimensions of the board
+	private int width, height; // dimensions of the board
 	
 	/*
 		init(String role, int playclock) is called once before you have to select the first action. Use it to initialize the agent. role is either "white" or "black" and playclock is the number of seconds after which nextAction must return.
 	*/
-    public void init(String role, int sizeX, int sizeY, int playclock) {
+    public void init(String role, int width, int height, int playclock) {
 		this.role = role;
 		this.playclock = playclock;
 		myTurn = !role.equals("white");
-		this.sizeX = sizeX;
-        this.sizeY = sizeY;
-        
+		this.width = width;
+		this.height = height;
+		// TODO give env an input
+        env = new Environment(String role, )
 		// TODO: add your own initialization code here
 		// TODO Initialize and fill pawns_white <List(Coordinates)> and for black
     }
@@ -43,13 +44,13 @@ public class MyAgent {
 			// Here we just construct a random move (that will most likely not even be possible),
 			// this needs to be replaced with the actual best move.
 			int x1,y1,x2,y2;
-			x1 = random.nextInt(sizeX)+1;
+			x1 = random.nextInt(width)+1;
 			x2 = x1 + random.nextInt(3)-1;
 			if (role.equals("white")) {
-				y1 = random.nextInt(sizeY-1);
+				y1 = random.nextInt(height-1);
 				y2 = y1 + 1;
 			} else {
-				y1 = random.nextInt(sizeY-1)+2;
+				y1 = random.nextInt(height-1)+2;
 				y2 = y1 - 1;
 			}
 			return "(move " + x1 + " " + y1 + " " + x2 + " " + y2 + ")";
