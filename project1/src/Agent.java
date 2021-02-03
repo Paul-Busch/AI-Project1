@@ -5,3 +5,4 @@ public interface Agent
     public String nextAction(int[] lastmove);
     public void cleanup();
 }
+//TEST
