@@ -3,21 +3,20 @@ public class MyAgent {
 	private String role; // the name of this agent's role (white or black)
 	private int playclock; // this is how much time (in seconds) we have before nextAction needs to return a move
 	private boolean myTurn; // whether it is this agent's turn or not
-	private int width, height; // dimensions of the board
-	
+	private int sizeX, sizeY; // dimensions of the board
+	private Environment env;
 	/*
 		init(String role, int playclock) is called once before you have to select the first action. Use it to initialize the agent. role is either "white" or "black" and playclock is the number of seconds after which nextAction must return.
 	*/
-    public void init(String role, int width, int height, int playclock) {
+    public void init(String role, int sizeX, int sizeY, int playclock) {
 		this.role = role;
 		this.playclock = playclock;
 		myTurn = !role.equals("white");
-		this.width = width;
-		this.height = height;
-		// TODO give env an input
-        env = new Environment(String role, )
-		// TODO: add your own initialization code here
-		// TODO Initialize and fill pawns_white <List(Coordinates)> and for black
+		this.sizeX = sizeX;
+		this.sizeY = sizeY;
+		
+        env = new Environment(role, sizeX, sizeY);
+		// TODO: Linus add your own initialization code here
     }
 
 	// lastMove is null the first time nextAction gets called (in the initial state)
@@ -32,7 +31,7 @@ public class MyAgent {
     			roleOfLastPlayer = "black";
     		}
    			System.out.println(roleOfLastPlayer + " moved from " + x1 + "," + y1 + " to " + x2 + "," + y2);
-    		// TODO: 1. update your internal world model according to the action that was just executed
+    		// TODO: Linus 1. update your internal world model according to the action that was just executed
     		
     	}
 		
@@ -43,26 +42,21 @@ public class MyAgent {
 
 			// Here we just construct a random move (that will most likely not even be possible),
 			// this needs to be replaced with the actual best move.
-			int x1,y1,x2,y2;
-			x1 = random.nextInt(width)+1;
-			x2 = x1 + random.nextInt(3)-1;
-			if (role.equals("white")) {
-				y1 = random.nextInt(height-1);
-				y2 = y1 + 1;
-			} else {
-				y1 = random.nextInt(height-1)+2;
-				y2 = y1 - 1;
-			}
-			return "(move " + x1 + " " + y1 + " " + x2 + " " + y2 + ")";
+			int x1,y1,x2,y2 = 0;
+			
+			
+			
+			//return "(move " + x1 + " " + y1 + " " + x2 + " " + y2 + ")";
+			return " ";
 		} else {
 			return "noop";
 		}
 	}
 
 	// is called when the game is over or the match is aborted
-	@Override
+	//TODO Linus @Override
 	public void cleanup() {
-		// TODO: cleanup so that the agent is ready for the next match
+		// TODO: Later cleanup so that the agent is ready for the next match
 	}
 
 }

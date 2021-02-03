@@ -18,7 +18,6 @@ public class RandomAgent implements Agent
 		myTurn = !role.equals("white");
 		this.width = width;
 		this.height = height;
-		// TODO: add your own initialization code here
 		
     }
 
@@ -34,14 +33,12 @@ public class RandomAgent implements Agent
     			roleOfLastPlayer = "black";
     		}
    			System.out.println(roleOfLastPlayer + " moved from " + x1 + "," + y1 + " to " + x2 + "," + y2);
-    		// TODO: 1. update your internal world model according to the action that was just executed
     		
     	}
 		
     	// update turn (above that line it myTurn is still for the previous state)
 		myTurn = !myTurn;
 		if (myTurn) {
-			// TODO: 2. run alpha-beta search to determine the best move
 
 			// Here we just construct a random move (that will most likely not even be possible),
 			// this needs to be replaced with the actual best move.
@@ -64,7 +61,6 @@ public class RandomAgent implements Agent
 	// is called when the game is over or the match is aborted
 	@Override
 	public void cleanup() {
-		// TODO: cleanup so that the agent is ready for the next match
 	}
 
 }

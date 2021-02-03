@@ -6,7 +6,7 @@ public class Main {
 	 */
 	public static void main(String[] args){
 		try{
-			// TODO: put in your agent here
+			// TODO: Later put in your agent here
 			Agent agent = new RandomAgent();
 
 			int port=4001;
