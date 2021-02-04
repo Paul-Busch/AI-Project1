@@ -18,16 +18,26 @@ public class Environment {
 		currentState = new State();
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
-		// TODO Paul Initialize and fill pawns_white <List(Coordinates)> and for black
+		// TODO Paul test function with printout
+
 		List<Coordinates> fillMyPawns = new ArrayList<Coordinates>();
-		List<Coordinates> fillOpponentPawns = new ArrayList<Coordinates>();
-		// Coordinates coordinates1 = new Coordinates(1, 1);
-		// Coordinates coordinates_last1 = new Coordinates(sizeX, 1);
-		
+		for (int y = 1; y <= 2; y++) {
+			for (int x = 1; x <= sizeX; x++) {
+				Coordinates fillInCoordinates = new Coordinates(x, y);
+				fillMyPawns.add(fillInCoordinates);
+			  }
+		  }
+		  // TODO Paul test function with printout
+		  List<Coordinates> fillOpponentPawns = new ArrayList<Coordinates>();
+		  for (int y = sizeY-1; y <= sizeY; y++) {
+			  for (int x = 1; x <= sizeX; x++) {
+				  Coordinates fillInCoordinates = new Coordinates(x, y);
+				  fillOpponentPawns.add(fillInCoordinates);
+				}
+			}
 		currentState.myPawns = fillMyPawns;
 		currentState.opponentPawns = fillOpponentPawns;
-		currentState.myTurn = true; //true or false? --> check with color
-		
+		currentState.myTurn = true; //TODO (Later) true or false? --> check with color	
 	}
 
 	/**
