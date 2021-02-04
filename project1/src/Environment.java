@@ -18,7 +18,7 @@ public class Environment {
 		currentState = new State();
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
-		// TODO Paul test function with printout
+		// TODO (Paul) test function with printout
 
 		List<Coordinates> fillMyPawns = new ArrayList<Coordinates>();
 		for (int y = 1; y <= 2; y++) {
@@ -27,7 +27,7 @@ public class Environment {
 				fillMyPawns.add(fillInCoordinates);
 			  }
 		  }
-		  // TODO Paul test function with printout
+		  // TODO (Paul) test function with printout
 		  List<Coordinates> fillOpponentPawns = new ArrayList<Coordinates>();
 		  for (int y = sizeY-1; y <= sizeY; y++) {
 			  for (int x = 1; x <= sizeX; x++) {
@@ -64,7 +64,7 @@ public class Environment {
 	 */
 	public  List<int[]> legalMoves(State state) {
 		List<int[]> moves = new LinkedList<int[]>();
-		//TODO (soon) legalMoves
+		//TODO (Linus) legalMoves
 		return moves;
 	}
 
@@ -76,7 +76,7 @@ public class Environment {
 	 */
 	public  State getNextState(State s, int[] move) {
 		State succState = s.clone();
-		// TODO: Laura fill out this function
+		// TODO: (Laura) getNextState fill out this function
 		return succState;
 	}
 }
