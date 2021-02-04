@@ -63,9 +63,39 @@ public class Environment {
 	 * @return a list of moves that are possible in the given state
 	 */
 	public  List<int[]> legalMoves(State state) {
-		List<int[]> moves = new LinkedList<int[]>();
-		//TODO (Linus) legalMoves
-		return moves;
+		List<int[]> legalMoves = new LinkedList<int[]>();
+		
+		//TODO (Done:Linus) legalMoves
+		for(int i=0; i<state.myPawns.size(); i++){
+			//go through all element of myPawns and check what they can do
+			if(state.myPawns.get(i) != null){
+				Coordinates currentCoordinates = new Coordinates(state.myPawns.get(i).x, state.myPawns.get(i).y);
+				Coordinates goForwardCoordinates = new Coordinates(state.myPawns.get(i).x, state.myPawns.get(i).y + 1);
+				Coordinates hitLeftCoordinates = new Coordinates(state.myPawns.get(i).x - 1, state.myPawns.get(i).y + 1);
+				Coordinates hitRightCoordinates = new Coordinates(state.myPawns.get(i).x + 1, state.myPawns.get(i).y + 1);
+				int[] legalMove = {currentCoordinates.x,currentCoordinates.y,0,0};
+				//go forward
+				if(!state.myPawns.contains(goForwardCoordinates) && !state.opponentPawns.contains(goForwardCoordinates)){
+					legalMove[2] = goForwardCoordinates.x;
+					legalMove[3] = goForwardCoordinates.y;
+					legalMoves.add(legalMove);
+				}
+				//hit left
+				if(!state.myPawns.contains(hitLeftCoordinates) && state.opponentPawns.contains(hitLeftCoordinates)){
+					legalMove[2] = hitLeftCoordinates.x;
+					legalMove[3] = hitLeftCoordinates.y;
+					legalMoves.add(legalMove);
+				}
+				//hit right
+				if(!state.myPawns.contains(hitRightCoordinates) && state.opponentPawns.contains(hitRightCoordinates)){
+					legalMove[2] = hitRightCoordinates.x;
+					legalMove[3] = hitRightCoordinates.y;
+					legalMoves.add(legalMove);
+				}
+
+			} 
+		}
+		return legalMoves;
 	}
 
 	/**
