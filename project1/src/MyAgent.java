@@ -32,7 +32,7 @@ public class MyAgent {
 			System.out.println(roleOfLastPlayer + " moved from " + x1 + "," + y1 + " to " + x2 + "," + y2);
 			
 			// TODO: (Linus:Done) 1. update your internal world model according to the action that was just executed
-			env.updateEnvAfterOpponentAction(lastMove);
+			env.getNextState(env.getCurrentState(), lastMove);
     		
     	}
 		

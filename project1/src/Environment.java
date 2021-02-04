@@ -49,44 +49,32 @@ public class Environment {
 	}
 
 	/**
-	 * updates the current state of the environment based on the given action
+	 * updates the current state of the environment based on the given move
 	 * 
-	 * @param a
+	 * @param move
 	 */
-	public void doAction(Action a) {
-		currentState = getNextState(currentState, a);
-	}
-
-		/**
-	 * updates the current state of the environment based on the opponents action
-	 * 
-	 * @param int[] lastMove
-	 */
-
-	public void updateEnvAfterOpponentAction(int[] lastMove) {
-		int x1 = lastMove[0], y1 = lastMove[1], x2 = lastMove[2], y2 = lastMove[3];
-		State succState = getCurrentState().clone();
-		//TODO Paul? update the two lists with positions
-		currentState = succState;
+	public void doMove(int[] move) {
+		currentState = getNextState(currentState, move);
 	}
 
 	/**
 	 * 
 	 * @param state
-	 * @return a list of actions that are possible in the given state
+	 * @return a list of moves that are possible in the given state
 	 */
-	public  List<Action> legalMoves(State state) {
-		List<Action> moves = new LinkedList<Action>();
+	public  List<int[]> legalMoves(State state) {
+		List<int[]> moves = new LinkedList<int[]>();
+		//TODO (soon) legalMoves
 		return moves;
 	}
 
 	/**
 	 * 
 	 * @param s state
-	 * @param a action
-	 * @return the state resulting from doing a in s
+	 * @param move int[]
+	 * @return the state resulting from doing moves in s
 	 */
-	public  State getNextState(State s, Action a) {
+	public  State getNextState(State s, int[] move) {
 		State succState = s.clone();
 		// TODO: Laura fill out this function
 		return succState;
