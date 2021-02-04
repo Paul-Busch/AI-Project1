@@ -30,7 +30,8 @@ public class State implements Cloneable {
 		public String toString() {
 			return "FILL ME";
 		}
-		// TODO Paul rewrite equals 
+
+		// TODO (Paul) rewrite equals 
 		public boolean equals(Object o) {
 			if (!(o instanceof State)) {
 				return false;
