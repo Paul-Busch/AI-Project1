@@ -13,6 +13,9 @@ public class State implements Cloneable {
 	public List<Coordinates> opponentPawns;
 	public boolean myTurn;
 
+		/**
+		 * 
+		 */
 		public State() {
 			myPawns = new ArrayList<Coordinates>();
 			opponentPawns = new ArrayList<Coordinates>();
@@ -31,12 +34,15 @@ public class State implements Cloneable {
 			return "FILL ME";
 		}
 
-		// TODO (Paul) rewrite equals 
+		// TODO (later) better performance when checking if s.myPawns.size() == myPawns.size() so that not whole list is compared before knowing its size
 		public boolean equals(Object o) {
 			if (!(o instanceof State)) {
 				return false;
 			}
 			State s = (State) o;
-			return false;
+			return  s.myTurn == myTurn && s.myPawns.equals(myPawns) && s.opponentPawns.equals(opponentPawns);
+
 		}
-	}
+	}	
+		
+	
