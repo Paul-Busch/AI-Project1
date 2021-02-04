@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,15 +8,19 @@ import java.util.List;
  *
  */
 public class State implements Cloneable {
-	protected List<Coordinates> myPawns;
-	protected List<Coordinates> opponentPawns;
-	protected boolean myTurn;
+
+	public List<Coordinates> myPawns;
+	public List<Coordinates> opponentPawns;
+	public boolean myTurn;
 
 		public State() {
-			//TODO Linus look where this is called or needed
+			myPawns = new ArrayList<Coordinates>();
+			opponentPawns = new ArrayList<Coordinates>();
+			myTurn = false; //TODO (Later) false or true?
+			//TODO (Done:Linus) look where this is called or needed
 		}
 
-		// TODO Laura rewrite clone
+		// TODO (Laura) rewrite clone
 		@SuppressWarnings("unchecked")
 		public State clone() {
 			return null;

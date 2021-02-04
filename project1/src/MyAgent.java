@@ -16,7 +16,6 @@ public class MyAgent {
 		this.sizeY = sizeY;
 		
         env = new Environment(role, sizeX, sizeY);
-		// TODO: Linus add your own initialization code here
     }
 
 	// lastMove is null the first time nextAction gets called (in the initial state)
@@ -30,8 +29,10 @@ public class MyAgent {
     		} else {
     			roleOfLastPlayer = "black";
     		}
-   			System.out.println(roleOfLastPlayer + " moved from " + x1 + "," + y1 + " to " + x2 + "," + y2);
-    		// TODO: Linus 1. update your internal world model according to the action that was just executed
+			System.out.println(roleOfLastPlayer + " moved from " + x1 + "," + y1 + " to " + x2 + "," + y2);
+			
+			// TODO: (Linus:Done) 1. update your internal world model according to the action that was just executed
+			env.updateEnvAfterOpponentAction(lastMove);
     		
     	}
 		
@@ -54,7 +55,7 @@ public class MyAgent {
 	}
 
 	// is called when the game is over or the match is aborted
-	//TODO Linus @Override
+	//TODO Later @Override
 	public void cleanup() {
 		// TODO: Later cleanup so that the agent is ready for the next match
 	}
