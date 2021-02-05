@@ -31,7 +31,7 @@ public class State implements Cloneable {
 				cloned = (State)super.clone();
 				cloned.myPawns =  new ArrayList<Coordinates>(this.myPawns); 
 				cloned.opponentPawns =  new ArrayList<Coordinates>(this.opponentPawns); 
-				
+
 			//	cloned.myPawns = (List<Coordinates>)myPawns.clone();	
 			//	cloned.opponentPawns = (List<Coordinates>)opponentPawns.clone();
 			//do I need to clone the bool too?
@@ -44,15 +44,16 @@ public class State implements Cloneable {
 			return "FILL ME";
 		}
 
-		// TODO (later) better performance when checking if s.myPawns.size() == myPawns.size() so that not whole list is compared before knowing its size
-		public boolean equals(Object o) {
-			if (!(o instanceof State)) {
-				return false;
-			}
-			State s = (State) o;
-			return  s.myTurn == myTurn && s.myPawns.equals(myPawns) && s.opponentPawns.equals(opponentPawns);
-
-		}
-	}	
 		
+		State s = (State) o;
+		Boolean myPawnsEquals = (s.myPawns.size() == myPawns.size() && s.myPawns.containsAll(myPawns) && myPawns.containsAll(s.myPawns));
+		Boolean opponentPawnsEquals = (s.opponentPawns.size() == opponentPawns.size() && s.opponentPawns.containsAll(opponentPawns) && opponentPawns.containsAll(s.opponentPawns));
+		return  s.myTurn == myTurn && myPawnsEquals && opponentPawnsEquals;
+
+	}
+}	
+	
+
+/* if (list1.size() == list2.size() && list1.containsAll(list2) && list1.containsAll(list2)        ) {
+	System.out.println("EQUAL"); */
 	
