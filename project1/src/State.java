@@ -45,8 +45,5 @@ public class State implements Cloneable {
 		return  s.myTurn == myTurn && myPawnsEquals && opponentPawnsEquals;
 	}
 }	
-	
 
-/* if (list1.size() == list2.size() && list1.containsAll(list2) && list1.containsAll(list2)        ) {
-	System.out.println("EQUAL"); */
 	
