@@ -26,7 +26,17 @@ public class State implements Cloneable {
 		// TODO (Laura) rewrite clone
 		@SuppressWarnings("unchecked")
 		public State clone() {
-			return null;
+			State cloned;
+			try {
+				cloned = (State)super.clone();
+				cloned.myPawns =  new ArrayList<Coordinates>(this.myPawns); 
+				cloned.opponentPawns =  new ArrayList<Coordinates>(this.opponentPawns); 
+				
+			//	cloned.myPawns = this.myPawns.clone();
+			//	cloned.opponentPawns = (List<Coordinates>)opponentPawns.clone();
+			//do I need to clone the bool too?
+			} catch (CloneNotSupportedException e) { e.printStackTrace(); System.exit(-1); cloned=null; }
+			return cloned;
 		}
 		
 
