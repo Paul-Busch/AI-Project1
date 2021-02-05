@@ -13,6 +13,7 @@ public class State implements Cloneable {
 	public List<Coordinates> opponentPawns;
 	public boolean myTurn;
 
+<<<<<<< HEAD
 		/**
 		 * 
 		 */
@@ -40,19 +41,37 @@ public class State implements Cloneable {
 		}
 		
 
-		public String toString() {
-			return "FILL ME";
-		}
+	/**
+	 * 
+	 */
+	public State() {
+		myPawns = new ArrayList<Coordinates>();
+		opponentPawns = new ArrayList<Coordinates>();
+		myTurn = false; //TODO (Later) false or true?
+		//TODO (Done:Linus) look where this is called or needed
+	}
+>>>>>>> 4cb628a0c477d9a6323c20459dbdb11a8803f9b4
 
-		// TODO (later) better performance when checking if s.myPawns.size() == myPawns.size() so that not whole list is compared before knowing its size
-		public boolean equals(Object o) {
-			if (!(o instanceof State)) {
-				return false;
-			}
-			State s = (State) o;
-			return  s.myTurn == myTurn && s.myPawns.equals(myPawns) && s.opponentPawns.equals(opponentPawns);
+	// TODO (Laura) rewrite clone
+	@SuppressWarnings("unchecked")
+	public State clone() {
+		return null;
+	}
+	
 
+	public String toString() {
+		return "FILL ME";
+	}
+
+	// TODO (later) better performance when checking if s.myPawns.size() == myPawns.size() so that not whole list is compared before knowing its size
+	public boolean equals(Object o) {
+		if (!(o instanceof State)) {
+			return false;
 		}
-	}	
+		State s = (State) o;
+		return  s.myTurn == myTurn && s.myPawns.equals(myPawns) && s.opponentPawns.equals(opponentPawns);
+
+	}
+}	
 		
 	
