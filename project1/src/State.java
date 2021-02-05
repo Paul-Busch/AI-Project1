@@ -43,8 +43,11 @@ public class State implements Cloneable {
 	public String toString() {
 		return "FILL ME";
 	}
-
-	public boolean equals(Object o){
+	// TODO (done by Paul)
+	public boolean equals(Object o) {
+		if (!(o instanceof State)) {
+			return false;
+		}
 		State s = (State) o;
 		boolean myPawnsEquals = (s.myPawns.size() == myPawns.size() && s.myPawns.containsAll(myPawns) && myPawns.containsAll(s.myPawns));
 		boolean opponentPawnsEquals = (s.opponentPawns.size() == opponentPawns.size() && s.opponentPawns.containsAll(opponentPawns) && opponentPawns.containsAll(s.opponentPawns));
