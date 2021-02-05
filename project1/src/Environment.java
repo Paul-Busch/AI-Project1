@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.io.*; 
 
 public class Environment {
 
@@ -155,12 +156,34 @@ public class Environment {
 	/**
 	 * 
 	 * @param s state
-	 * @param move int[]
+	 * @param move int[] (x1, y1, x2, y2)
 	 * @return the state resulting from doing moves in s
 	 */
 	public  State getNextState(State s, int[] move) {
 		State succState = s.clone();
-		// TODO: (Laura) getNextState fill out this function
+		// TODO: (Done) getNextState fill out this function
+		if (succState.myTurn==true){
+			//iterate over the my pawns list of coordinates 
+			for (Coordinates element : succState.myPawns){
+				//for each element if it has the same coordinates as the first two positions of move
+				if (element.x == move[0] && element.y == move[1]){
+					//set element to the new coordinates (which are the last two positions of move array)
+					element.x = move[2];
+					element.y = move[3];
+				}
+			}
+		}
+		else{
+			//iterate over the opponent pawns list of coordinates 
+			for (Coordinates element : succState.opponentPawns){
+				//for each element if it has the same coordinates as the first two positions of move array
+				if (element.x == move[0] && element.y == move[1]){
+					//set element to the new coordinates (which are the last two positions of move array)
+					element.x = move[2];
+					element.y = move[3];
+				}
+			}
+		}
 		return succState;
 	}
 }
