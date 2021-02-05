@@ -23,23 +23,49 @@ public class Environment {
 		this.role = role;
 		// TODO (Paul) test function with printout
 
-		List<Coordinates> fillMyPawns = new ArrayList<Coordinates>();
-		for (int y = 1; y <= 2; y++) {
-			for (int x = 1; x <= sizeX; x++) {
-				Coordinates fillInCoordinates = new Coordinates(x, y);
-				fillMyPawns.add(fillInCoordinates);
-			  }
-		  }
-		  // TODO (Paul) test function with printout
-		  List<Coordinates> fillOpponentPawns = new ArrayList<Coordinates>();
-		  for (int y = sizeY-1; y <= sizeY; y++) {
-			  for (int x = 1; x <= sizeX; x++) {
-				  Coordinates fillInCoordinates = new Coordinates(x, y);
-				  fillOpponentPawns.add(fillInCoordinates);
+		if (role.equals("white")){
+			List<Coordinates> fillMyPawns = new ArrayList<Coordinates>();
+			for (int y = 1; y <= 2; y++) {
+				for (int x = 1; x <= sizeX; x++) {
+					Coordinates fillInCoordinates = new Coordinates(x, y);
+					fillMyPawns.add(fillInCoordinates);
 				}
 			}
-		currentState.myPawns = fillMyPawns;
-		currentState.opponentPawns = fillOpponentPawns;
+			
+			// TODO (Paul) test function with printout
+			List<Coordinates> fillOpponentPawns = new ArrayList<Coordinates>();
+			for (int y = sizeY-1; y <= sizeY; y++) {
+				for (int x = 1; x <= sizeX; x++) {
+					Coordinates fillInCoordinates = new Coordinates(x, y);
+					fillOpponentPawns.add(fillInCoordinates);
+				}
+			}
+			currentState.myPawns = fillMyPawns;
+			currentState.opponentPawns = fillOpponentPawns;
+
+
+		} else if(role.equals("black")){
+			List<Coordinates> fillOpponentPawns = new ArrayList<Coordinates>();
+			for (int y = 1; y <= 2; y++) {
+				for (int x = 1; x <= sizeX; x++) {
+					Coordinates fillInCoordinates = new Coordinates(x, y);
+					fillOpponentPawns.add(fillInCoordinates);
+				}
+			}
+			
+			// TODO (Paul) test function with printout
+			List<Coordinates> fillMyPawns = new ArrayList<Coordinates>();
+			for (int y = sizeY-1; y <= sizeY; y++) {
+				for (int x = 1; x <= sizeX; x++) {
+					Coordinates fillInCoordinates = new Coordinates(x, y);
+					fillMyPawns.add(fillInCoordinates);
+				}
+			}
+			currentState.myPawns = fillMyPawns;
+			currentState.opponentPawns = fillOpponentPawns;
+		}
+		
+
 		currentState.myTurn = true; //TODO (Later) true or false? --> check with color	
 	}
 
@@ -108,7 +134,7 @@ public class Environment {
 				} 
 			}
 			
-		} else if(role.equals("black") && state.myTurn || role.equals("white") && !state.myTurn){
+		} else if((role.equals("black") && state.myTurn) || (role.equals("white") && !state.myTurn)){
 			//legal moves for black
 
 			//TODO (Linus) legalMoves

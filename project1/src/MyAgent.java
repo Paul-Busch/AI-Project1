@@ -1,4 +1,11 @@
-public class MyAgent {
+import java.util.Random;
+
+public class MyAgent implements Agent {
+
+
+	//4debug
+	private Random random = new Random();
+
     
 	private String role; // the name of this agent's role (white or black)
 	private int playclock; // this is how much time (in seconds) we have before nextAction needs to return a move
@@ -42,12 +49,16 @@ public class MyAgent {
 
 			// Here we just construct a random move (that will most likely not even be possible),
 			// this needs to be replaced with the actual best move.
-			int x1,y1,x2,y2 = 0;
+			int x1,y1,x2,y2;
+			int num = random.nextInt(env.legalMoves(env.getCurrentState()).size());
+			int[] move = env.legalMoves(env.getCurrentState()).get(num);
+			x1 = move[0];
+			y1 = move[1];
+			x2 = move[2];
+			y2 = move[3];
 			
+			return "(move " + x1 + " " + y1 + " " + x2 + " " + y2 + ")";
 			
-			
-			//return "(move " + x1 + " " + y1 + " " + x2 + " " + y2 + ")";
-			return " ";
 		} else {
 			return "noop";
 		}
