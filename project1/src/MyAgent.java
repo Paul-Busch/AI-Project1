@@ -39,7 +39,7 @@ public class MyAgent implements Agent {
 			System.out.println(roleOfLastPlayer + " moved from " + x1 + "," + y1 + " to " + x2 + "," + y2);
 			
 			// TODO: (Done:Linus) 1. update your internal world model according to the action that was just executed
-			env.getNextState(env.getCurrentState(), lastMove);
+			env.currentState = env.getNextState(env.getCurrentState(), lastMove);
     	}
 		
     	// update turn (above that line it myTurn is still for the previous state)

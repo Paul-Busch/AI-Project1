@@ -99,16 +99,18 @@ public class Environment {
 		Coordinates goForwardCoordinates = new Coordinates(0,0);
 		Coordinates hitLeftCoordinates = new Coordinates(0,0);
 		Coordinates hitRightCoordinates = new Coordinates(0,0);
-		int[] legalMove = {0,0,0,0};
 
 
 		if(state.myTurn){
 			//go through all element of myPawns and check what they can do
 			for(int i=0; i<state.myPawns.size(); i++){
 				
+				//TODO initialize every time
+
+
 				if(state.myPawns.get(i) != null){
 					
-					currentCoordinates.x = state.myPawns.get(i).x; currentCoordinates.y = state.myPawns.get(i).y;
+					currentCoordinates.x = (int) state.myPawns.get(i).x; currentCoordinates.y = (int) state.myPawns.get(i).y;
 
 					//calculate the next position
 					if (role.equals("white")){
@@ -121,23 +123,27 @@ public class Environment {
 						hitRightCoordinates.x = currentCoordinates.x + 1; hitRightCoordinates.y = currentCoordinates.y - 1;
 					}
 
-					//write current position into the first two parameters of a legal move
-					legalMove[0] = currentCoordinates.x;
-					legalMove[1] = currentCoordinates.y;
+				
 					
 					//check the constrains for a legal move 
 					//go forward
 					if(!state.myPawns.contains(goForwardCoordinates) && !state.opponentPawns.contains(goForwardCoordinates)){
 						if (goForwardCoordinates.x >= 1 && goForwardCoordinates.x <= sizeX && goForwardCoordinates.y >= 1 && goForwardCoordinates.y <= sizeY){
+							
+							int[] legalMove = new int[4];
+							legalMove[0] = currentCoordinates.x;
+							legalMove[1] = currentCoordinates.y;
 							legalMove[2] = goForwardCoordinates.x;
 							legalMove[3] = goForwardCoordinates.y;
 							legalMoves.add(legalMove);
 						}
-
 					}
 					//hit left
 					if(!state.myPawns.contains(hitLeftCoordinates) && state.opponentPawns.contains(hitLeftCoordinates)){
 						if (hitLeftCoordinates.x >= 1 && hitLeftCoordinates.x <= sizeX && hitLeftCoordinates.y >= 1 && hitLeftCoordinates.y <= sizeY){
+							int[] legalMove = new int[4];
+							legalMove[0] = currentCoordinates.x;
+							legalMove[1] = currentCoordinates.y;
 							legalMove[2] = hitLeftCoordinates.x;
 							legalMove[3] = hitLeftCoordinates.y;
 							legalMoves.add(legalMove);
@@ -146,6 +152,9 @@ public class Environment {
 					//hit right
 					if(!state.myPawns.contains(hitRightCoordinates) && state.opponentPawns.contains(hitRightCoordinates)){
 						if (hitRightCoordinates.x >= 1 && hitRightCoordinates.x <= sizeX && hitRightCoordinates.y >= 1 && hitRightCoordinates.y <= sizeY){
+							int[] legalMove = new int[4];
+							legalMove[0] = currentCoordinates.x;
+							legalMove[1] = currentCoordinates.y;
 							legalMove[2] = hitRightCoordinates.x;
 							legalMove[3] = hitRightCoordinates.y;
 							legalMoves.add(legalMove);
@@ -159,6 +168,8 @@ public class Environment {
 			//TODO (Linus) legalMoves
 			for(int i=0; i<state.opponentPawns.size(); i++){
 				//go through all element of myPawns and check what they can do
+				
+
 				if(state.opponentPawns.get(i) != null){
 					
 					currentCoordinates.x = state.opponentPawns.get(i).x; currentCoordinates.y = state.opponentPawns.get(i).y;
@@ -172,12 +183,13 @@ public class Environment {
 						hitLeftCoordinates.x = currentCoordinates.x - 1; hitLeftCoordinates.y = currentCoordinates.y - 1;
 						hitRightCoordinates.x = currentCoordinates.x + 1; hitRightCoordinates.y = currentCoordinates.y - 1;
 					}
-
-					legalMove[0] = currentCoordinates.x;
-					legalMove[1] = currentCoordinates.y;
+					
 					//go forward
 					if(!state.opponentPawns.contains(goForwardCoordinates) && !state.myPawns.contains(goForwardCoordinates)){
 						if (goForwardCoordinates.x >= 1 && goForwardCoordinates.x <= sizeX && goForwardCoordinates.y >= 1 && goForwardCoordinates.y <= sizeY){
+							int[] legalMove = new int[4];
+							legalMove[0] = currentCoordinates.x;
+							legalMove[1] = currentCoordinates.y;
 							legalMove[2] = goForwardCoordinates.x;
 							legalMove[3] = goForwardCoordinates.y;
 							legalMoves.add(legalMove);
@@ -187,6 +199,9 @@ public class Environment {
 					//hit left
 					if(!state.opponentPawns.contains(hitLeftCoordinates) && state.myPawns.contains(hitLeftCoordinates)){
 						if (hitLeftCoordinates.x >= 1 && hitLeftCoordinates.x <= sizeX && hitLeftCoordinates.y >= 1 && hitLeftCoordinates.y <= sizeY){
+							int[] legalMove = new int[4];
+							legalMove[0] = currentCoordinates.x;
+							legalMove[1] = currentCoordinates.y;
 							legalMove[2] = hitLeftCoordinates.x;
 							legalMove[3] = hitLeftCoordinates.y;
 							legalMoves.add(legalMove);
@@ -195,6 +210,9 @@ public class Environment {
 					//hit right
 					if(!state.opponentPawns.contains(hitRightCoordinates) && state.myPawns.contains(hitRightCoordinates)){
 						if (hitRightCoordinates.x >= 1 && hitRightCoordinates.x <= sizeX && hitRightCoordinates.y >= 1 && hitRightCoordinates.y <= sizeY){
+							int[] legalMove = new int[4];
+							legalMove[0] = currentCoordinates.x;
+							legalMove[1] = currentCoordinates.y;
 							legalMove[2] = hitRightCoordinates.x;
 							legalMove[3] = hitRightCoordinates.y;
 							legalMoves.add(legalMove);
@@ -217,9 +235,11 @@ public class Environment {
 	 */
 	public  State getNextState(State s, int[] move) {
 		State succState = s.clone();
+		Coordinates currentCoordinates = new Coordinates(move[0], move[1]);
 		Coordinates nextCoordinates = new Coordinates(move[2], move[3]);
 		// TODO: (Done) getNextState fill out this function
-		if (succState.myTurn==true){
+		//if (succState.myTurn==true){
+		if (succState.myPawns.contains(currentCoordinates)){
 			//iterate over the my pawns list of coordinates 
 			for (Coordinates element : succState.myPawns){
 				//for each element if it has the same coordinates as the first two positions of move
