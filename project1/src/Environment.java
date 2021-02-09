@@ -276,6 +276,12 @@ public class Environment {
 	}
 	// TODO (Paul) implement the evalFunc 
 	public int eval(State state) {
+		// First search for most advanced pawn
+		// Then calculate the distance from the most advanced pawn to line 1 or to sizeY (depending on the color of the player)
+		// With the minDistance for each player calculate the evalScore (see pdf for description of the evalFunction)
+		// return evalScore
+
+
 		//initialize tempVar with the first element so that it is safe to return a list element and not the initialization 
 		int myTempVar = state.myPawns.get(0).y;
 		int opponentTempVar = state.opponentPawns.get(0).y;
@@ -284,9 +290,10 @@ public class Environment {
 		
 
 
-		// check which color the agent is currently playing
+		// check which color the agent is currently playing to see whether the goalline is line 1 or sizeY
 		if (role == "black") {
 			// search for max element in myPawns and opponentPawns
+			// For loop is starting with 1 because TempVar is initialized with the zero element of the list
 			for (int i = 1; i < state.myPawns.size(); i++) {
 				if (state.myPawns.get(i).y < myTempVar) {
 					myTempVar = state.myPawns.get(i).y;
@@ -297,6 +304,18 @@ public class Environment {
 			}
 			myMinDistance = myTempVar - 1;
 			opponentMinDistance = sizeY - opponentTempVar;
+
+			// calculating the evalScore for role = black, it is the same statements for role = white because the variables that are used do not depend on the color
+			if (!(myMinDistance == 0) && !(legalMoves(state).size() == 0))  {
+				evalScore = opponentMinDistance - myMinDistance;
+			} else if (myMinDistance == 0) {
+				evalScore = 100;
+			} else if (opponentMinDistance == 0) {
+				evalScore = -100;
+			} else {
+				evalScore = 0;
+			}
+
 		} else {
 			for (int i = 1; i < state.myPawns.size(); i++) {
 				if (state.myPawns.get(i).y > myTempVar) {
@@ -309,23 +328,17 @@ public class Environment {
 			myMinDistance = sizeY - myTempVar;
 			opponentMinDistance = myTempVar - 1;
 			 
-		}
-
-		// if terminal state add -100 or + 100
-		if (!(myMinDistance == 0) || !(opponentMinDistance == 0)) {
-			if (myMinDistance >= opponentMinDistance) {
-				evalScore += myMinDistance - opponentMinDistance;
+			// calculating the evalScore for role = white
+			if (!(myMinDistance == 0) && !(legalMoves(state).size() == 0))  {
+				evalScore = opponentMinDistance - myMinDistance;
+			} else if (myMinDistance == 0) {
+				evalScore = 100;
+			} else if (opponentMinDistance == 0) {
+				evalScore = -100;
 			} else {
-				evalScore += opponentMinDistance - myMinDistance;
-			}	
-		} else if (myMinDistance == 0) {
-			evalScore += 100;
-		} else if (opponentMinDistance == 0) {
-			evalScore -= 100;
+				evalScore = 0;
+			}
 		}
-		// if there are no legal states than evalScore = 0
 		return evalScore;
-
-
 	}
 }
