@@ -29,8 +29,8 @@ public class Search{
 					maxEval = childEval;
 					this.bestMove = legalMove;
 				}
-				return maxEval;
 			} 
+			return maxEval;
 
 		} else {
 			//minimizing player
@@ -43,8 +43,9 @@ public class Search{
 					minEval = childEval;
 					this.bestMove = legalMove;
 				}
-				return minEval;
+				
 			}
+			return minEval;
 		}
 	}
 }

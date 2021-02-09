@@ -12,6 +12,7 @@ public class MyAgent implements Agent {
 	private boolean myTurn; // whether it is this agent's turn or not
 	private int sizeX, sizeY; // dimensions of the board
 	private Environment env;
+	Search search; 
 	/*
 		init(String role, int playclock) is called once before you have to select the first action. Use it to initialize the agent. role is either "white" or "black" and playclock is the number of seconds after which nextAction must return.
 	*/
@@ -22,7 +23,9 @@ public class MyAgent implements Agent {
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		
+		
         env = new Environment(role, sizeX, sizeY);
+		this.search = new Search(env, playclock);
     }
 
 	// lastMove is null the first time nextAction gets called (in the initial state)
@@ -50,12 +53,19 @@ public class MyAgent implements Agent {
 			// Here we just construct a random move (that will most likely not even be possible),
 			// this needs to be replaced with the actual best move.
 			int x1,y1,x2,y2;
-			int num = random.nextInt(env.legalMoves(env.getCurrentState()).size());
-			int[] move = env.legalMoves(env.getCurrentState()).get(num);
+			//int num = random.nextInt(env.legalMoves(env.getCurrentState()).size());
+			//int[] move = env.legalMoves(env.getCurrentState()).get(num);
+			search.miniMax(env.getCurrentState(),4);
+			int[] move = search.bestMove;
+
+
+
 			x1 = move[0];
 			y1 = move[1];
 			x2 = move[2];
 			y2 = move[3];
+
+
 			
 			return "(move " + x1 + " " + y1 + " " + x2 + " " + y2 + ")";
 			
