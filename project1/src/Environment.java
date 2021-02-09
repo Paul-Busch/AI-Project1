@@ -1,7 +1,7 @@
+import java.lang.management.MemoryPoolMXBean;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.io.*; 
 
 public class Environment {
 
@@ -11,6 +11,7 @@ public class Environment {
 	protected int sizeY;
 	protected State currentState;
 	protected String role;
+	protected int evalScore;
 
 	public Environment(String role, int sizeX, int sizeY) {
 		init(role, sizeX, sizeY);
@@ -238,7 +239,8 @@ public class Environment {
 		Coordinates currentCoordinates = new Coordinates(move[0], move[1]);
 		Coordinates nextCoordinates = new Coordinates(move[2], move[3]);
 		// TODO: (Done) getNextState fill out this function
-		//if (succState.myTurn==true){
+		// TODO: (Afterwards) check if this is possible: if (succState.myTurn==true){
+		// TODO: cange myTurn?
 		if (succState.myPawns.contains(currentCoordinates)){
 			//iterate over the my pawns list of coordinates 
 			for (Coordinates element : succState.myPawns){
@@ -269,6 +271,74 @@ public class Environment {
 				}
 			}
 		}
+		succState.myTurn = !s.myTurn;
 		return succState;
+	}
+	// TODO (Paul) implement the evalFunc 
+	public int eval(State state) {
+		// First search for most advanced pawn
+		// Then calculate the distance from the most advanced pawn to line 1 or to sizeY (depending on the color of the player)
+		// With the minDistance for each player calculate the evalScore (see pdf for description of the evalFunction)
+		// return evalScore
+
+
+		//initialize tempVar with the first element so that it is safe to return a list element and not the initialization 
+		int myTempVar = state.myPawns.get(0).y;
+		int opponentTempVar = state.opponentPawns.get(0).y;
+		int myMinDistance = 0;
+		int opponentMinDistance = 0;
+		
+
+
+		// check which color the agent is currently playing to see whether the goalline is line 1 or sizeY
+		if (role == "black") {
+			// search for max element in myPawns and opponentPawns
+			// For loop is starting with 1 because TempVar is initialized with the zero element of the list
+			for (int i = 1; i < state.myPawns.size(); i++) {
+				if (state.myPawns.get(i).y < myTempVar) {
+					myTempVar = state.myPawns.get(i).y;
+				}
+				if (state.opponentPawns.get(i).y > opponentTempVar) {
+					opponentTempVar = state.opponentPawns.get(i).y;
+				}
+			}
+			myMinDistance = myTempVar - 1;
+			opponentMinDistance = sizeY - opponentTempVar;
+
+			// calculating the evalScore for role = black, it is the same statements for role = white because the variables that are used do not depend on the color
+			if (!(myMinDistance == 0) && !(legalMoves(state).size() == 0))  {
+				evalScore = opponentMinDistance - myMinDistance;
+			} else if (myMinDistance == 0) {
+				evalScore = 100;
+			} else if (opponentMinDistance == 0) {
+				evalScore = -100;
+			} else {
+				evalScore = 0;
+			}
+
+		} else {
+			for (int i = 1; i < state.myPawns.size(); i++) {
+				if (state.myPawns.get(i).y > myTempVar) {
+					myTempVar = state.myPawns.get(i).y;
+				}
+				if (state.opponentPawns.get(i).y < opponentMinDistance) {
+					opponentTempVar = state.opponentPawns.get(i).y;
+				}
+			}
+			myMinDistance = sizeY - myTempVar;
+			opponentMinDistance = myTempVar - 1;
+			 
+			// calculating the evalScore for role = white
+			if (!(myMinDistance == 0) && !(legalMoves(state).size() == 0))  {
+				evalScore = opponentMinDistance - myMinDistance;
+			} else if (myMinDistance == 0) {
+				evalScore = 100;
+			} else if (opponentMinDistance == 0) {
+				evalScore = -100;
+			} else {
+				evalScore = 0;
+			}
+		}
+		return evalScore;
 	}
 }
