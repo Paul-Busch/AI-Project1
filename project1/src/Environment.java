@@ -291,13 +291,15 @@ public class Environment {
 
 
 		// check which color the agent is currently playing to see whether the goalline is line 1 or sizeY
-		if (role == "black") {
+		if (role.equals("black")) {
 			// search for max element in myPawns and opponentPawns
 			// For loop is starting with 1 because TempVar is initialized with the zero element of the list
 			for (int i = 1; i < state.myPawns.size(); i++) {
 				if (state.myPawns.get(i).y < myTempVar) {
 					myTempVar = state.myPawns.get(i).y;
 				}
+			}
+			for (int i = 1; i < state.opponentPawns.size(); i++) {
 				if (state.opponentPawns.get(i).y > opponentTempVar) {
 					opponentTempVar = state.opponentPawns.get(i).y;
 				}
@@ -321,12 +323,15 @@ public class Environment {
 				if (state.myPawns.get(i).y > myTempVar) {
 					myTempVar = state.myPawns.get(i).y;
 				}
-				if (state.opponentPawns.get(i).y < opponentMinDistance) {
+			}
+			for (int i = 1; i < state.opponentPawns.size(); i++) {
+				if (state.opponentPawns.get(i).y < opponentTempVar) {
 					opponentTempVar = state.opponentPawns.get(i).y;
 				}
 			}
+				
 			myMinDistance = sizeY - myTempVar;
-			opponentMinDistance = myTempVar - 1;
+			opponentMinDistance = opponentTempVar - 1;
 			 
 			// calculating the evalScore for role = white
 			if (!(myMinDistance == 0) && !(legalMoves(state).size() == 0))  {
@@ -338,7 +343,7 @@ public class Environment {
 			} else {
 				evalScore = 0;
 			}
-		}
+		}	
 		return evalScore;
 	}
 }

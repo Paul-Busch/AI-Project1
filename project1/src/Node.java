@@ -34,10 +34,4 @@ public class Node {
 		this.depth = parent.depth + 1;
 		this.evaluation = eval;
 	}
-	
-
-
-	public String toString() {
-		return "Node{depth: " + depth + ", value: " + evaluation + ", state: " + state + ", path: " + getPlan() + "}";
-	}
 }
