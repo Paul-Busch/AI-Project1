@@ -55,8 +55,9 @@ public class MyAgent implements Agent {
 			int x1,y1,x2,y2;
 			//int num = random.nextInt(env.legalMoves(env.getCurrentState()).size());
 			//int[] move = env.legalMoves(env.getCurrentState()).get(num);
-			search.miniMax(env.getCurrentState(),4);
-			int[] move = search.bestMove;
+
+			
+			int[] move = search.miniMaxRoot(env.getCurrentState(),1);
 
 
 

@@ -5,8 +5,6 @@ import java.util.List;
 
 public class Environment {
 
-
-
 	protected int sizeX;
 	protected int sizeY;
 	protected State currentState;
@@ -75,7 +73,7 @@ public class Environment {
 	 * @return the current state of the environment
 	 */
 	public State getCurrentState() {
-		return currentState;
+		return currentState.clone();
 	}
 
 	/**
@@ -176,13 +174,13 @@ public class Environment {
 					currentCoordinates.x = state.opponentPawns.get(i).x; currentCoordinates.y = state.opponentPawns.get(i).y;
 
 					if (role.equals("white")){
+						goForwardCoordinates.x = currentCoordinates.x; goForwardCoordinates.y = currentCoordinates.y - 1; //plus und minus vertsudht
+						hitLeftCoordinates.x = currentCoordinates.x - 1; hitLeftCoordinates.y = currentCoordinates.y - 1;
+						hitRightCoordinates.x = currentCoordinates.x + 1; hitRightCoordinates.y = currentCoordinates.y - 1;
+					} else if(role.equals("black")){
 						goForwardCoordinates.x = currentCoordinates.x; goForwardCoordinates.y = currentCoordinates.y + 1;
 						hitLeftCoordinates.x = currentCoordinates.x - 1; hitLeftCoordinates.y = currentCoordinates.y + 1;
 						hitRightCoordinates.x = currentCoordinates.x + 1; hitRightCoordinates.y = currentCoordinates.y + 1;
-					} else if(role.equals("black")){
-						goForwardCoordinates.x = currentCoordinates.x; goForwardCoordinates.y = currentCoordinates.y - 1;
-						hitLeftCoordinates.x = currentCoordinates.x - 1; hitLeftCoordinates.y = currentCoordinates.y - 1;
-						hitRightCoordinates.x = currentCoordinates.x + 1; hitRightCoordinates.y = currentCoordinates.y - 1;
 					}
 					
 					//go forward
@@ -235,7 +233,8 @@ public class Environment {
 	 * @return the state resulting from doing moves in s
 	 */
 	public  State getNextState(State s, int[] move) {
-		State succState = s.clone();
+		State succState = new State();
+		succState = s.clone();
 		Coordinates currentCoordinates = new Coordinates(move[0], move[1]);
 		Coordinates nextCoordinates = new Coordinates(move[2], move[3]);
 		// TODO: (Done) getNextState fill out this function
@@ -275,7 +274,8 @@ public class Environment {
 		return succState;
 	}
 	// TODO (Paul) implement the evalFunc 
-	public int eval(State state) {
+	public int eval(State s) {
+		State state = s.clone();
 		// First search for most advanced pawn
 		// Then calculate the distance from the most advanced pawn to line 1 or to sizeY (depending on the color of the player)
 		// With the minDistance for each player calculate the evalScore (see pdf for description of the evalFunction)
@@ -289,7 +289,7 @@ public class Environment {
 		int opponentMinDistance = 0;
 		
 
-
+	
 		// check which color the agent is currently playing to see whether the goalline is line 1 or sizeY
 		if (role.equals("black")) {
 			// search for max element in myPawns and opponentPawns
@@ -307,8 +307,10 @@ public class Environment {
 			myMinDistance = myTempVar - 1;
 			opponentMinDistance = sizeY - opponentTempVar;
 
+
+
 			// calculating the evalScore for role = black, it is the same statements for role = white because the variables that are used do not depend on the color
-			if (!(myMinDistance == 0) && !(legalMoves(state).size() == 0))  {
+			if (!(myMinDistance == 0)&& !(legalMoves(state).size() == 0) )  { //
 				evalScore = opponentMinDistance - myMinDistance;
 			} else if (myMinDistance == 0) {
 				evalScore = 100;
@@ -334,7 +336,8 @@ public class Environment {
 			opponentMinDistance = opponentTempVar - 1;
 			 
 			// calculating the evalScore for role = white
-			if (!(myMinDistance == 0) && !(legalMoves(state).size() == 0))  {
+
+			if (!(myMinDistance == 0) && !(legalMoves(state).size() == 0))  { //
 				evalScore = opponentMinDistance - myMinDistance;
 			} else if (myMinDistance == 0) {
 				evalScore = 100;

@@ -26,11 +26,25 @@ public class State implements Cloneable {
 	// TODO (Laura) rewrite clone
 	@SuppressWarnings("unchecked")
 	public State clone() {
-		State cloned;
+		State cloned = new State();
 		try {
 			cloned = (State)super.clone();
-			cloned.myPawns =  new ArrayList<Coordinates>(this.myPawns); 
-			cloned.opponentPawns =  new ArrayList<Coordinates>(this.opponentPawns); 
+
+			
+			List <Coordinates> tempMyPawns = new ArrayList<Coordinates>();
+			for(Coordinates i : this.myPawns){
+				Coordinates clone = (Coordinates) i.clone();
+				tempMyPawns.add(clone);
+			}
+		
+			List <Coordinates> tempOpponentPawns = new ArrayList<Coordinates>();
+			for(Coordinates i : this.opponentPawns){
+				Coordinates clone = (Coordinates) i.clone();
+				tempOpponentPawns.add(clone);
+			} 
+
+			cloned.myPawns = tempMyPawns;
+			cloned.opponentPawns = tempOpponentPawns;
 
 		//	cloned.myPawns = (List<Coordinates>)myPawns.clone();	
 		//	cloned.opponentPawns = (List<Coordinates>)opponentPawns.clone();
