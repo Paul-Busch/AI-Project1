@@ -7,11 +7,12 @@ public class MyAgent implements Agent {
 	private boolean myTurnAgent; // whether it is this agent's turn or not
 	private int sizeX, sizeY; // dimensions of the board
 	private Environment env;
-	Search search; 
+	Search search;
 	/*
 		init(String role, int playclock) is called once before you have to select the first action. Use it to initialize the agent. role is either "white" or "black" and playclock is the number of seconds after which nextAction must return.
 	*/
     public void init(String role, int sizeX, int sizeY, int playclock) {
+		
 		env = new Environment(role, sizeX, sizeY);
 		this.role = role;
 		this.playclock = playclock;
@@ -20,6 +21,7 @@ public class MyAgent implements Agent {
 		this.sizeY = sizeY;
 		
 		
+
         
 		this.search = new Search(env, playclock);
     }
@@ -49,7 +51,9 @@ public class MyAgent implements Agent {
 
 			int x1,y1,x2,y2;
 			
-			int[] move = search.miniMaxRoot(env.getCurrentState(),3);
+			
+			//int[] move = search.miniMaxRoot(env.getCurrentState(),100);
+			int[] move = search.iterativeDeepening(env.getCurrentState(), (int) System.currentTimeMillis());
 
 			x1 = move[0];
 			y1 = move[1];
