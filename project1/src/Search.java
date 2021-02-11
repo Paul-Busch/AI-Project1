@@ -17,11 +17,13 @@ public class Search {
 
 	public int[] iterativeDeepening(State state, int startingMillis){
 		int depth = 1;
-		int debug = (int) System.currentTimeMillis() - startingMillis;
 		while((int) System.currentTimeMillis() - startingMillis < (playclock - 1) * 1000){
+			System.out.println("New iteration, depth: " + depth);
 			returnMove = miniMaxRoot(state, depth, startingMillis);
 			depth++;
-			}
+
+
+		}
 		return returnMove;
 	}
 
@@ -53,12 +55,17 @@ public class Search {
 					if(childEval > maxEval){
 						maxEval = childEval;
 						bestMove = legalMove;
+						System.out.println("Best Move: Move: from (" + bestMove[0] + "," + bestMove[1] + ") to (" + bestMove[2] + "," + bestMove[3] + ") Evaluation: " + maxEval);
 					}	
 				
 				}
-			}
+			
 			returnMove = bestMove;
 			return bestMove;
+			}
+
+
+
 		} else {
 			return returnMove;
 		}
@@ -103,6 +110,9 @@ public class Search {
 						State child = new State();
 						child = env.getNextState(state, legalMove);
 						int childEval = miniMax(child, depth -1, startingMillis);
+						if ((int) System.currentTimeMillis() - startingMillis > (playclock - 1) * 1000){
+							break;
+						}
 						if(childEval < minEval){
 							minEval = childEval;
 						}

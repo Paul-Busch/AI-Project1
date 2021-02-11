@@ -316,7 +316,7 @@ public class Environment {
 
 
 				// calculating the evalScore for role = black, it is the same statements for role = white because the variables that are used do not depend on the color
-				if (!(myMinDistance == 0)&& !(legalMoves(state).size() == 0) )  { //
+				if (!(myMinDistance == 0) && !(opponentMinDistance == 0) && !(legalMoves(state).size() == 0) )  { //
 					evalScore = opponentMinDistance - myMinDistance;
 				} else if (myMinDistance == 0) {
 					evalScore = 100;
@@ -345,7 +345,7 @@ public class Environment {
 				
 				// calculating the evalScore for role = white
 
-				if (!(myMinDistance == 0) && !(legalMoves(state).size() == 0))  { 
+				if (!(myMinDistance == 0) && !(opponentMinDistance == 0)&& !(legalMoves(state).size() == 0))  { 
 					evalScore = opponentMinDistance - myMinDistance;
 				} else if (myMinDistance == 0) {
 					evalScore = 100;
