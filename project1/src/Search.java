@@ -11,12 +11,29 @@ public class Search {
 		this.env = env;
 	}
 
+	public int[] iterativeDeepening(State state, int startMillis){
+		int[] bestReturnMove = new int[4]; 
+		try {
+			int depth = 1;
+			while((int) System.currentTimeMillis() - startMillis < (playclock -1) * 1000){
+				System.out.println("Depth: " + depth);
+				bestReturnMove = miniMaxRoot(state, depth, startMillis);
+				depth++;
+
+			}
+		} catch (RuntimeException e) {
+			return bestReturnMove;
+		}
+		//Debug:
+		System.out.println("problem with iterative deepening");
+		return bestReturnMove; 
+
+	}
 
 
 
 
-
-	public int[] miniMaxRoot(State state, int depth){
+	public int[] miniMaxRoot(State state, int depth,  int startMillis){
 		int[] bestMove = new int[4];
 		int maxEval = -101;
 		
@@ -30,16 +47,19 @@ public class Search {
 		} else {
 			for(int[] legalMove : legalMoves){	//TODO what happens when there are no legal moves?
 				
-				State child = new State();
-				child =	env.getNextState(state, legalMove);
-				int childEval = miniMax(child, depth -1);
+				if((int) System.currentTimeMillis() - startMillis < (playclock -1) * 1000){
+					State child = new State();
+					child =	env.getNextState(state, legalMove);
+					int childEval = miniMax(child, depth -1);
 
-				System.out.println("Move: from (" + legalMove[0] + "," + legalMove[1] + ") to (" + legalMove[2] + "," + legalMove[3] + ") Evaluation: " + childEval);			
-				
-				if(childEval > maxEval){
-					maxEval = childEval;
-					bestMove = legalMove;
+					System.out.println("Move: from (" + legalMove[0] + "," + legalMove[1] + ") to (" + legalMove[2] + "," + legalMove[3] + ") Evaluation: " + childEval);			
 					
+					if(childEval > maxEval){
+						maxEval = childEval;
+						bestMove = legalMove;
+					}
+				} else {
+					throw new RuntimeException();
 				}
 			}
 		}
@@ -65,11 +85,16 @@ public class Search {
 			if(state.myTurn){
 				int maxEval = -101;
 				for(int[] legalMove : legalMoves){
-					State child = new State();
-					child = env.getNextState(state, legalMove);
-					int childEval = miniMax(child, depth -1);
-					if(childEval > maxEval){
-						maxEval = childEval;
+					if((int) System.currentTimeMillis() - startMillis < (playclock -1) * 1000){
+					
+						State child = new State();
+						child = env.getNextState(state, legalMove);
+						int childEval = miniMax(child, depth -1);
+						if(childEval > maxEval){
+							maxEval = childEval;
+						}
+					} else {
+						throw new RuntimeException();
 					}
 				} 
 				return maxEval;
@@ -78,11 +103,15 @@ public class Search {
 				//minimizing player
 				int minEval = 101;
 				for(int[] legalMove : legalMoves){
-					State child = new State();
-					child = env.getNextState(state, legalMove);
-					int childEval = miniMax(child, depth -1);
-					if(childEval < minEval){
-						minEval = childEval;
+					if((int) System.currentTimeMillis() - startMillis < (playclock -1) * 1000){
+						State child = new State();
+						child = env.getNextState(state, legalMove);
+						int childEval = miniMax(child, depth -1);
+						if(childEval < minEval){
+							minEval = childEval;
+						}
+					} else {
+						throw new RuntimeException();
 					}
 				}
 
