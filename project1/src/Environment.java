@@ -84,14 +84,16 @@ public class Environment {
 	}
 
 	/**
+	 * This function finds which moves for a given state are legal and returns them so that we can use
+	 * them later and make sure that all the moves done by the agent are not illigal
 	 * 
 	 * @param state
 	 * @return a list of moves that are possible in the given state
 	 */
 	public  List<int[]> legalMoves(State state) {
-		//TODO (Linus) legalMoves
-		List<int[]> legalMoves = new LinkedList<int[]>();
 		
+		List<int[]> legalMoves = new LinkedList<int[]>();
+
 		Coordinates currentCoordinates = new Coordinates(0,0);
 		Coordinates goForwardCoordinates = new Coordinates(0,0);
 		Coordinates hitLeftCoordinates = new Coordinates(0,0);
@@ -106,16 +108,24 @@ public class Environment {
 
 					if(state.myPawns.get(i) != null){
 						
+						//take the x and y current coordinates from the given state 
 						currentCoordinates.x = (int) state.myPawns.get(i).x; currentCoordinates.y = (int) state.myPawns.get(i).y;
 
-						//calculate the next position
+						//calculate the next position depending on the role
 						if (role.equals("white")){
+							//we take the same x coordinate as tha one we are in and we take the next y coordinate to move forward
 							goForwardCoordinates.x = currentCoordinates.x; goForwardCoordinates.y = currentCoordinates.y + 1;
+							//we take the previous x coordinate than the one we are in to go to the left and we take the next y coordinate to move forward
 							hitLeftCoordinates.x = currentCoordinates.x - 1; hitLeftCoordinates.y = currentCoordinates.y + 1;
+							//we take the next x coordinate than the one we are in to go to the right and we take the next y coordinate to move forward
 							hitRightCoordinates.x = currentCoordinates.x + 1; hitRightCoordinates.y = currentCoordinates.y + 1;
 						} else if(role.equals("black")){
+							//now we are in the other side of the board so instead to move forward we will move backwards from our point of view
+							//we take the same x coordinate as tha one we are in and we take the previous y coordinate to move backwards
 							goForwardCoordinates.x = currentCoordinates.x; goForwardCoordinates.y = currentCoordinates.y - 1;
+							//we take the previous x coordinate than the one we are in to go to the left and we take the previous y coordinate to move backwards
 							hitLeftCoordinates.x = currentCoordinates.x - 1; hitLeftCoordinates.y = currentCoordinates.y - 1;
+							//we take the next x coordinate than the one we are in to go to the right and we take the previous y coordinate to move backwards
 							hitRightCoordinates.x = currentCoordinates.x + 1; hitRightCoordinates.y = currentCoordinates.y - 1;
 						}
 
@@ -123,20 +133,29 @@ public class Environment {
 						
 						//check the constrains for a legal move 
 						//go forward
+						//the pawn will only move forward if in the next coordinate there's no other pawns 
 						if(!state.myPawns.contains(goForwardCoordinates) && !state.opponentPawns.contains(goForwardCoordinates)){
+							// the pawn will only move if the next coordinate is inside the board
 							if (goForwardCoordinates.x >= 1 && goForwardCoordinates.x <= sizeX && goForwardCoordinates.y >= 1 && goForwardCoordinates.y <= sizeY){
-								
+								//legal move is an integer array of the form [x1, y1, x2, y2]
 								int[] legalMove = new int[4];
+								// x1 and y1 will indicate the current position
 								legalMove[0] = currentCoordinates.x;
 								legalMove[1] = currentCoordinates.y;
+								//x2 and y2 will indicate the next position, which we checked that is legal to move to 
 								legalMove[2] = goForwardCoordinates.x;
 								legalMove[3] = goForwardCoordinates.y;
+								
+								//since the coordinates fullfill all the constraints we can add them as a legal move in the integer array of legal moves
 								legalMoves.add(legalMove);
 							}
 						}
 						//hit left
+						// the pawn will only move left if in the next coordinate there's an opponent pawn
 						if(!state.myPawns.contains(hitLeftCoordinates) && state.opponentPawns.contains(hitLeftCoordinates)){
+							// the pawn will only move if the next coordinate is inside the board
 							if (hitLeftCoordinates.x >= 1 && hitLeftCoordinates.x <= sizeX && hitLeftCoordinates.y >= 1 && hitLeftCoordinates.y <= sizeY){
+								//same as before, since the coordinates fullfill all the constraints we can add them as a legal move in the integer array of legal moves
 								int[] legalMove = new int[4];
 								legalMove[0] = currentCoordinates.x;
 								legalMove[1] = currentCoordinates.y;
@@ -146,8 +165,11 @@ public class Environment {
 							}
 						}
 						//hit right
+						// the pawn will only move right if in the next coordinate there's an opponent pawn
 						if(!state.myPawns.contains(hitRightCoordinates) && state.opponentPawns.contains(hitRightCoordinates)){
+							// the pawn will only move if the next coordinate is inside the board
 							if (hitRightCoordinates.x >= 1 && hitRightCoordinates.x <= sizeX && hitRightCoordinates.y >= 1 && hitRightCoordinates.y <= sizeY){
+								//same as before, since the coordinates fullfill all the constraints we can add them as a legal move in the integer array of legal moves
 								int[] legalMove = new int[4];
 								legalMove[0] = currentCoordinates.x;
 								legalMove[1] = currentCoordinates.y;
@@ -159,9 +181,8 @@ public class Environment {
 					} 
 				}
 			}  else if(!state.myTurn){
-				//legal moves for own white
+				//we follow the same procedure to find the legal moves our opponent can do in this state
 
-				//TODO (Linus) legalMoves
 				for(int i=0; i<state.opponentPawns.size(); i++){
 					//go through all element of myPawns and check what they can do
 					
@@ -169,9 +190,10 @@ public class Environment {
 					if(state.opponentPawns.get(i) != null){
 						
 						currentCoordinates.x = state.opponentPawns.get(i).x; currentCoordinates.y = state.opponentPawns.get(i).y;
-
+						
+						//now the point of view is the opposite than before (white will move backwards and black will move forward)
 						if (role.equals("white")){
-							goForwardCoordinates.x = currentCoordinates.x; goForwardCoordinates.y = currentCoordinates.y - 1; //plus und minus vertsudht
+							goForwardCoordinates.x = currentCoordinates.x; goForwardCoordinates.y = currentCoordinates.y - 1;
 							hitLeftCoordinates.x = currentCoordinates.x - 1; hitLeftCoordinates.y = currentCoordinates.y - 1;
 							hitRightCoordinates.x = currentCoordinates.x + 1; hitRightCoordinates.y = currentCoordinates.y - 1;
 						} else if(role.equals("black")){
@@ -180,6 +202,7 @@ public class Environment {
 							hitRightCoordinates.x = currentCoordinates.x + 1; hitRightCoordinates.y = currentCoordinates.y + 1;
 						}
 						
+						//to find the legal moves we do it the same way as before
 						//go forward
 						if(!state.opponentPawns.contains(goForwardCoordinates) && !state.myPawns.contains(goForwardCoordinates)){
 							if (goForwardCoordinates.x >= 1 && goForwardCoordinates.x <= sizeX && goForwardCoordinates.y >= 1 && goForwardCoordinates.y <= sizeY){
@@ -217,6 +240,7 @@ public class Environment {
 					} 
 				}
 			}
+		//TODO: delete debug
 		} else if(state.myPawns.isEmpty()) {
 			boolean debugBool = true;
 		} else if(state.opponentPawns.isEmpty()) {
@@ -228,9 +252,10 @@ public class Environment {
 	}
 
 	/**
+	 * This function gets the move we want to do and returns the new state with the move already done
 	 * 
 	 * @param s state
-	 * @param move int[] (x1, y1, x2, y2)
+	 * @param move int[] (x1, y1, x2, y2), where x1 and y1 are the current position and x2 and y2 the next position
 	 * @return the state resulting from doing moves in s
 	 */
 	public  State getNextState(State s, int[] move) {
@@ -238,10 +263,8 @@ public class Environment {
 		succState = s.clone();
 		Coordinates currentCoordinates = new Coordinates(move[0], move[1]);
 		Coordinates nextCoordinates = new Coordinates(move[2], move[3]);
-		// TODO: (Done) getNextState fill out this function
-		// TODO: (Afterwards) check if this is possible: if (succState.myTurn==true){
-		// TODO: cange myTurn?
 		if(!succState.myPawns.isEmpty() && !succState.opponentPawns.isEmpty()){
+			//in order to see if it is our turn or the opponent's one
 			if (succState.myPawns.contains(currentCoordinates)){
 				//iterate over the my pawns list of coordinates 
 				for (Coordinates element : succState.myPawns){
@@ -251,7 +274,7 @@ public class Environment {
 						element.x = move[2];
 						element.y = move[3];
 					}
-					//TODO (Laura) Linus added this since hit plavers must be removed
+					// If a player is hit it have to be removed from the board (from the coordinates list)
 					if (succState.opponentPawns.contains(nextCoordinates)){
 						succState.opponentPawns.remove(nextCoordinates);
 					}
@@ -266,12 +289,13 @@ public class Environment {
 						element.x = move[2];
 						element.y = move[3];
 					}
-					//TODO (Laura) Linus added this since hit plavers must be removed
+					// If a player is hit it have to be removed from the board (from the coordinates list)
 					if (succState.myPawns.contains(nextCoordinates)){
 						succState.myPawns.remove(nextCoordinates);
 					}
 				}
 			}
+			//we have to change the turn after moving a pawn
 			succState.myTurn = !s.myTurn;
 			return succState;
 		}else {
@@ -279,13 +303,21 @@ public class Environment {
 			return succState;
 		}
 	}
-	// TODO (Paul) implement the evalFunc 
+	
+	/**
+	 * This function evaluates the score of choosing an input state
+	 * 
+	 * @param s state
+	 * @return the score (int) of choosing that state: 100 (win), 0 (draw), -100(lose)
+	 */
 	public int eval(State s) {
 		State state = s.clone();
-		// First search for most advanced pawn
-		// Then calculate the distance from the most advanced pawn to line 1 or to sizeY (depending on the color of the player)
-		// With the minDistance for each player calculate the evalScore (see pdf for description of the evalFunction)
-		// return evalScore
+		/* 
+		First search for most advanced pawn
+		Then calculate the distance from the most advanced pawn to line 1 or to sizeY (depending on the color of the player)
+		With the minDistance for each player calculate the evalScore
+		return evalScore
+		*/
 
 		if(!state.myPawns.isEmpty() && !state.opponentPawns.isEmpty()){
 			//initialize tempVar with the first element so that it is safe to return a list element and not the initialization 
@@ -296,9 +328,9 @@ public class Environment {
 			
 
 		
-			// check which color the agent is currently playing to see whether the goalline is line 1 or sizeY
+			// check which color the agent is currently playing to see whether the goal line is line 1 or sizeY
 			if (role.equals("black")) {
-				// search for max element in myPawns and opponentPawns
+				// search for most advanced element in myPawns and opponentPawns
 				// For loop is starting with 1 because TempVar is initialized with the zero element of the list
 				for (int i = 1; i < state.myPawns.size(); i++) {
 					if (state.myPawns.get(i).y < myTempVar) {
@@ -310,24 +342,31 @@ public class Environment {
 						opponentTempVar = state.opponentPawns.get(i).y;
 					}
 				}
+				//since we are from the point of view of black the distance left for the furthest pawn is its own y coordinate minus 1 (since the first row is row 1) 
 				myMinDistance = myTempVar - 1;
+				//in the case of the opponent the distance will be the height of the board minus its own y coordinate
 				opponentMinDistance = sizeY - opponentTempVar;
 
 
 
 				// calculating the evalScore for role = black, it is the same statements for role = white because the variables that are used do not depend on the color
-				if (!(myMinDistance == 0)&& !(legalMoves(state).size() == 0) )  { //
+				if (!(myMinDistance == 0)&& !(legalMoves(state).size() == 0) )  { 
 					evalScore = opponentMinDistance - myMinDistance;
+				// this means that the pawn reached the goal row, hence we win
 				} else if (myMinDistance == 0) {
 					evalScore = 100;
+				// this means that an opponent pawn reached its goal row, hence we lose
 				} else if (opponentMinDistance == 0) {
 					evalScore = -100;
+				// if there are no legal moves left it means that we cannot do anything 
 				} else if(legalMoves(state).size() == 0){
 					evalScore = 0;
 				} else {
-					System.out.println("there is a problem in eval()"); //debug
+					//TODO: Delete debug
+					System.out.println("there is a problem in eval()"); 
 				}
-
+			
+			//same procedure but taking into account 'white' role instead of 'black' one
 			} else {
 				for (int i = 1; i < state.myPawns.size(); i++) {
 					if (state.myPawns.get(i).y > myTempVar) {
@@ -354,7 +393,8 @@ public class Environment {
 				} else if(legalMoves(state).size() == 0){
 					evalScore = 0;
 				} else {
-					System.out.println("there is a problem in eval()"); //debug
+					//TODO: Delete debug
+					System.out.println("there is a problem in eval()"); 
 				}
 			}	
 			return evalScore;
