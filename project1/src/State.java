@@ -46,6 +46,9 @@ public class State implements Cloneable {
 			cloned.myPawns = tempMyPawns;
 			cloned.opponentPawns = tempOpponentPawns;
 
+			boolean myTurnTmp = this.myTurn;
+			cloned.myTurn = myTurnTmp;
+
 		//	cloned.myPawns = (List<Coordinates>)myPawns.clone();	
 		//	cloned.opponentPawns = (List<Coordinates>)opponentPawns.clone();
 		//do I need to clone the bool too?
@@ -55,7 +58,15 @@ public class State implements Cloneable {
 	
 
 	public String toString() {
-		return "FILL ME";
+		String stateToString ="MyPawns:";
+		for(Coordinates corr : myPawns){
+			stateToString += "(" + corr.x + "," + corr.y + "),";
+		}
+		stateToString += "    opponentPawns:";
+		for(Coordinates corr : opponentPawns){
+			stateToString += "(" + corr.x + "," + corr.y + "),";
+		}
+		return stateToString;
 	}
 	// TODO (done by Paul)
 	public boolean equals(Object o) {
@@ -67,6 +78,5 @@ public class State implements Cloneable {
 		boolean opponentPawnsEquals = (s.opponentPawns.size() == opponentPawns.size() && s.opponentPawns.containsAll(opponentPawns) && opponentPawns.containsAll(s.opponentPawns));
 		return  s.myTurn == myTurn && myPawnsEquals && opponentPawnsEquals;
 	}
-}	
-
+}
 	
