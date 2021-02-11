@@ -11,6 +11,7 @@ public class MyAgent implements Agent {
 	/*
 		init(String role, int playclock) is called once before you have to select the first action. Use it to initialize the agent. role is either "white" or "black" and playclock is the number of seconds after which nextAction must return.
 	*/
+	//
     public void init(String role, int sizeX, int sizeY, int playclock) {
 		env = new Environment(role, sizeX, sizeY);
 		this.role = role;
@@ -18,14 +19,17 @@ public class MyAgent implements Agent {
 		myTurnAgent = !role.equals("white");
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
-		
-		
-        
 		this.search = new Search(env, playclock);
     }
 
 	// lastMove is null the first time nextAction gets called (in the initial state)
-    // otherwise it contains the coordinates x1,y1,x2,y2 of the move that the last player did
+	// otherwise it contains the coordinates x1,y1,x2,y2 of the move that the last player did
+	/**
+	 * 
+	 * @param int[] lastMove 
+	 * @return String with x1, x2, y1, y2 when its the agents turn, String "noop" when its not the agents turn
+	 * This method returns the nextAction that is the bestMove found in miniMaxRoot
+	 */
     public String nextAction(int[] lastMove) {
     	if (lastMove != null) {
     		int x1 = lastMove[0], y1 = lastMove[1], x2 = lastMove[2], y2 = lastMove[3];

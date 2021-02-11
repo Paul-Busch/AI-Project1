@@ -85,7 +85,6 @@ public class Search {
 						minEval = childEval;
 					}
 				}
-
 				return minEval;
 
 			}
