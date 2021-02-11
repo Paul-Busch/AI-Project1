@@ -48,8 +48,9 @@ public class MyAgent implements Agent {
 
 
 			int x1,y1,x2,y2;
-			
-			int[] move = search.miniMaxRoot(env.getCurrentState(),10);
+			int startMillis = (int) System.currentTimeMillis();
+			int[] move = search.iterativeDeepening(env.getCurrentState(), startMillis);
+
 
 			x1 = move[0];
 			y1 = move[1];
