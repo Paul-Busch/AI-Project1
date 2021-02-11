@@ -123,6 +123,7 @@ public class Search {
 				}
 			}
 		} else {
+			break;
 			System.out.println("problem with minimax breakstatement");
 			return 0;
 		}
