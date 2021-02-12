@@ -3,8 +3,7 @@ import java.util.List;
 
 /**
  * 
- * This class holds all information about the state of the environment and the
- * robot
+ * This class holds all information about the state of the environment
  *
  */
 public class State implements Cloneable {
