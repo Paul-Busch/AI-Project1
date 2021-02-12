@@ -5,6 +5,7 @@ public class Search {
 
 	int playclock;
 	Environment env;
+	int startingMillis;
 
 	public Search(Environment env, int playclock) {
 		this.playclock = playclock;
@@ -12,12 +13,13 @@ public class Search {
 	}
 
 	public int[] iterativeDeepening(State state, int startMillis){
+		this.startingMillis = startMillis;
 		int[] bestReturnMove = new int[4]; 
 		try {
 			int depth = 1;
 			while((int) System.currentTimeMillis() - startMillis < (playclock -1) * 1000){
 				System.out.println("Depth: " + depth);
-				bestReturnMove = miniMaxRoot(state, depth, startMillis);
+				bestReturnMove = miniMaxRoot(state, depth);
 				depth++;
 
 			}
@@ -33,7 +35,7 @@ public class Search {
 
 
 
-	public int[] miniMaxRoot(State state, int depth,  int startMillis){
+	public int[] miniMaxRoot(State state, int depth){
 		int[] bestMove = new int[4];
 		int maxEval = -101;
 		
@@ -47,7 +49,7 @@ public class Search {
 		} else {
 			for(int[] legalMove : legalMoves){	//TODO what happens when there are no legal moves?
 				
-				if((int) System.currentTimeMillis() - startMillis < (playclock -1) * 1000){
+				if((int) System.currentTimeMillis() - startingMillis < (playclock -1) * 1000){
 					State child = new State();
 					child =	env.getNextState(state, legalMove);
 					int childEval = miniMax(child, depth -1);
@@ -85,7 +87,7 @@ public class Search {
 			if(state.myTurn){
 				int maxEval = -101;
 				for(int[] legalMove : legalMoves){
-					if((int) System.currentTimeMillis() - startMillis < (playclock -1) * 1000){
+					if((int) System.currentTimeMillis() - startingMillis < (playclock -1) * 1000){
 					
 						State child = new State();
 						child = env.getNextState(state, legalMove);
@@ -103,7 +105,7 @@ public class Search {
 				//minimizing player
 				int minEval = 101;
 				for(int[] legalMove : legalMoves){
-					if((int) System.currentTimeMillis() - startMillis < (playclock -1) * 1000){
+					if((int) System.currentTimeMillis() - startingMillis < (playclock -1) * 1000){
 						State child = new State();
 						child = env.getNextState(state, legalMove);
 						int childEval = miniMax(child, depth -1);
