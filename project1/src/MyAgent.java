@@ -7,6 +7,7 @@ public class MyAgent implements Agent {
 	private boolean myTurnAgent; // whether it is this agent's turn or not
 	private int sizeX, sizeY; // dimensions of the board
 	private Environment env;
+
 	Search search; 
 	/*
 		init(String role, int playclock) is called once before you have to select the first action. Use it to initialize the agent. role is either "white" or "black" and playclock is the number of seconds after which nextAction must return.
@@ -50,7 +51,8 @@ public class MyAgent implements Agent {
 			int x1,y1,x2,y2;
 			int startMillis = (int) System.currentTimeMillis();
 			int[] move = search.iterativeDeepening(env.getCurrentState(), startMillis);
-
+			int totalRuntime = (int) System.currentTimeMillis() - startMillis;
+			System.out.println("State expansions: " + search.stateExpansions + ", Current depth limit: " + search.depthLimit + ", Total runtime: " + totalRuntime + "ms");
 
 			x1 = move[0];
 			y1 = move[1];
