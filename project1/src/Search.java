@@ -53,7 +53,7 @@ public class Search {
 		legalMoves = env.legalMoves(state);
 
 		if(depth == 0 || env.eval(state) == 100 || env.eval(state) == -100){
-			System.out.println(state.toString() + "    Evaluation: " + env.eval(state));	
+			//System.out.println(state.toString() + "    Evaluation: " + env.eval(state));	
 			return env.eval(state);
 			//Debug
 			
