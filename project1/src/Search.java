@@ -6,6 +6,8 @@ public class Search {
 	int playclock;
 	Environment env;
 	int startingMillis;
+	public int stateExpansions;
+	public int depthLimit;
 
 	public Search(Environment env, int playclock) {
 		this.playclock = playclock;
@@ -15,11 +17,15 @@ public class Search {
 	public int[] iterativeDeepening(State state, int startMillis){
 		this.startingMillis = startMillis;
 		int[] bestReturnMove = new int[4]; 
+		int previousIterationMillis = 0;
 		try {
 			int depth = 1;
 			while((int) System.currentTimeMillis() - startMillis < (playclock -1) * 1000){
-				System.out.println("Depth: " + depth);
+				previousIterationMillis = (int) System.currentTimeMillis() - startMillis - previousIterationMillis;
+				System.out.println("Depth: " + depth + "    Time of previous iteration: " + previousIterationMillis + "ms");
 				bestReturnMove = miniMaxRoot(state, depth);
+				stateExpansions++;
+				depthLimit = depth;
 				depth++;
 
 			}
@@ -53,7 +59,7 @@ public class Search {
 					State child = new State();
 					child =	env.getNextState(state, legalMove);
 					int childEval = miniMax(child, depth -1);
-
+					stateExpansions++;
 					System.out.println("Move: from (" + legalMove[0] + "," + legalMove[1] + ") to (" + legalMove[2] + "," + legalMove[3] + ") Evaluation: " + childEval);			
 					
 					if(childEval > maxEval){
@@ -77,7 +83,6 @@ public class Search {
 		if(depth == 0 || env.eval(state) == 100 || env.eval(state) == -100){
 			//System.out.println(state.toString() + "    Evaluation: " + env.eval(state));	
 			return env.eval(state);
-			//Debug
 			
 		}
 		if(legalMoves.isEmpty()){
@@ -92,6 +97,7 @@ public class Search {
 						State child = new State();
 						child = env.getNextState(state, legalMove);
 						int childEval = miniMax(child, depth -1);
+						stateExpansions++;
 						if(childEval > maxEval){
 							maxEval = childEval;
 						}
@@ -109,6 +115,7 @@ public class Search {
 						State child = new State();
 						child = env.getNextState(state, legalMove);
 						int childEval = miniMax(child, depth -1);
+						stateExpansions++;
 						if(childEval < minEval){
 							minEval = childEval;
 						}
