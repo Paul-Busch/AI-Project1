@@ -101,7 +101,7 @@ public class Search {
 							maxEval = childEval;
 						}
 					} 
-					return maxEval;
+					return maxEval; // will return the first childEval that is bigger than maxEval
 
 				} else {
 					//minimizing player
@@ -118,12 +118,12 @@ public class Search {
 						}
 					}
 
-					return minEval;
+					return minEval; //returns the first eval that is smaller than 101
 
 				}
 			}
 		} else {
-			break;
+			break; // break is useless. If else is true it doesnt need a break statement anymore
 			System.out.println("problem with minimax breakstatement");
 			return 0;
 		}

@@ -1,4 +1,4 @@
-import jdk.jfr.internal.test.WhiteBox;
+//import jdk.jfr.internal.test.WhiteBox;
 
 public class Main {
 	/**
