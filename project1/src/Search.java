@@ -58,7 +58,7 @@ public class Search {
 				if((int) System.currentTimeMillis() - startingMillis < (playclock -1) * 1000){
 					State child = new State();
 					child =	env.getNextState(state, legalMove);
-					int childEval = miniMax(child, depth -1);
+					int childEval = miniMax(child, depth -1, -101, 101);
 					stateExpansions++;
 					System.out.println("Move: from (" + legalMove[0] + "," + legalMove[1] + ") to (" + legalMove[2] + "," + legalMove[3] + ") Evaluation: " + childEval);			
 					
@@ -74,7 +74,7 @@ public class Search {
 		return bestMove;
 	}
 
-	public int miniMax(State s, int depth){
+	public int miniMax(State s, int depth, int alpha, int beta){
 
 		State state = s.clone();
 		List<int[]> legalMoves = new ArrayList<int[]>();
@@ -96,10 +96,16 @@ public class Search {
 					
 						State child = new State();
 						child = env.getNextState(state, legalMove);
-						int childEval = miniMax(child, depth -1);
+						int childEval = miniMax(child, depth -1, alpha, beta);
 						stateExpansions++;
 						if(childEval > maxEval){
 							maxEval = childEval;
+						}
+						if(alpha > childEval){
+							alpha = childEval;
+						}
+						if(beta <= alpha){
+							break;
 						}
 					} else {
 						throw new RuntimeException();
@@ -114,11 +120,19 @@ public class Search {
 					if((int) System.currentTimeMillis() - startingMillis < (playclock -1) * 1000){
 						State child = new State();
 						child = env.getNextState(state, legalMove);
-						int childEval = miniMax(child, depth -1);
+						int childEval = miniMax(child, depth -1, alpha, beta);
 						stateExpansions++;
 						if(childEval < minEval){
 							minEval = childEval;
 						}
+
+						if(beta < childEval){
+							beta = childEval;
+						}
+						if(beta <= alpha){
+							break;
+						}
+
 					} else {
 						throw new RuntimeException();
 					}
