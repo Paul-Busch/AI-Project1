@@ -351,7 +351,7 @@ public class Environment {
 
 				// calculating the evalScore for role = black, it is the same statements for role = white because the variables that are used do not depend on the color
 				if (!(myMinDistance == 0) && !(opponentMinDistance == 0) && !(legalMoves(state).size() == 0) )  { 
-					evalScore = opponentMinDistance - myMinDistance;
+					evalScore = opponentMinDistance - myMinDistance; //take hit players into account the y position is valued higher
 				// this means that the pawn reached the goal row, hence we win
 				} else if (myMinDistance == 0) {
 					evalScore = 100;
