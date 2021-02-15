@@ -33,9 +33,10 @@ public class MyAgent implements Agent {
 	 */
     public String nextAction(int[] lastMove) {
     	if (lastMove != null) {
-			//we take the coordin
+			//we take the coordinates from the last move done
     		int x1 = lastMove[0], y1 = lastMove[1], x2 = lastMove[2], y2 = lastMove[3];
     		String roleOfLastPlayer;
+			//check wether the role is white or black and we assign it to a string
     		if (myTurnAgent && role.equals("white") || !myTurnAgent && role.equals("black")) {
     			roleOfLastPlayer = "white";
     		} else {
@@ -43,22 +44,24 @@ public class MyAgent implements Agent {
     		}
 			System.out.println(roleOfLastPlayer + " moved from " + x1 + "," + y1 + " to " + x2 + "," + y2);
 			
-			// TODO: (Done:Linus) 1. update your internal world model according to the action that was just executed
+			// Update internal world model according to the action that was just executed. We do so by calling getNextState
 			env.currentState = env.getNextState(env.getCurrentState(), lastMove);
     	}
 		
     	// update turn (above that line it myTurn is still for the previous state)
 		myTurnAgent = !myTurnAgent;
 		if (myTurnAgent) {
-			// TODO: (Later) 2. run alpha-beta search to determine the best move
-
-
+			
 			int x1,y1,x2,y2;
+			//starting time
 			int startMillis = (int) System.currentTimeMillis();
+			// Run alpha-beta search to determine the best move
 			int[] move = search.iterativeDeepening(env.getCurrentState(), startMillis);
+			//total time spent
 			int totalRuntime = (int) System.currentTimeMillis() - startMillis;
 			System.out.println("State expansions: " + search.stateExpansions + ", Current depth limit: " + search.depthLimit + ", Total runtime: " + totalRuntime + "ms");
 
+			//we return the best move
 			x1 = move[0];
 			y1 = move[1];
 			x2 = move[2];
@@ -71,10 +74,8 @@ public class MyAgent implements Agent {
 		}
 	}
 
-	// is called when the game is over or the match is aborted
-	//TODO Later @Override
 	public void cleanup() {
-		// TODO: Later cleanup so that the agent is ready for the next match
+		// is called when the game is over or the match is aborted
 	}
 
 }
