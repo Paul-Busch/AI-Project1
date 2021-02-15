@@ -240,13 +240,7 @@ public class Environment {
 					} 
 				}
 			}
-		//TODO: delete debug
-		} else if(state.myPawns.isEmpty()) {
-			boolean debugBool = true;
-		} else if(state.opponentPawns.isEmpty()) {
-			boolean debugBool = true;
 		}
-
 		return legalMoves;
 		
 	}

@@ -20,7 +20,7 @@ public class Search {
 		int previousIterationMillis = 0;
 		try {
 			int depth = 1;
-			while((int) System.currentTimeMillis() - startMillis < (playclock* 1000)-900){
+			while((int) System.currentTimeMillis() - startMillis < (playclock* 1000)-100){
 				previousIterationMillis = (int) System.currentTimeMillis() - startMillis - previousIterationMillis;
 				System.out.println("Depth: " + depth + "    Time of previous iteration: " + previousIterationMillis + "ms");
 				bestReturnMove = miniMaxRoot(state, depth);
@@ -55,7 +55,7 @@ public class Search {
 		} else {
 			for(int[] legalMove : legalMoves){	//TODO what happens when there are no legal moves?
 				
-				if((int) System.currentTimeMillis() - startingMillis < (playclock* 1000)-900){
+				if((int) System.currentTimeMillis() - startingMillis < (playclock* 1000)-100){
 					State child = new State();
 					child =	env.getNextState(state, legalMove);
 					int childEval = miniMax(child, depth -1, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -92,7 +92,7 @@ public class Search {
 			if(state.myTurn){
 				int maxEval = Integer.MIN_VALUE;
 				for(int[] legalMove : legalMoves){
-					if((int) System.currentTimeMillis() - startingMillis < (playclock* 1000)-900){
+					if((int) System.currentTimeMillis() - startingMillis < (playclock* 1000)-100){
 					
 						State child = new State();
 						child = env.getNextState(state, legalMove);
@@ -117,7 +117,7 @@ public class Search {
 				//minimizing player
 				int minEval = Integer.MAX_VALUE;
 				for(int[] legalMove : legalMoves){
-					if((int) System.currentTimeMillis() - startingMillis < (playclock* 1000)-900){
+					if((int) System.currentTimeMillis() - startingMillis < (playclock* 1000)-100){
 						State child = new State();
 						child = env.getNextState(state, legalMove);
 						int childEval = miniMax(child, depth -1, alpha, beta);
