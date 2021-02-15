@@ -11,13 +11,13 @@ public class Coordinates implements Cloneable {
 		Coordinates c = (Coordinates)o;
 		return c.x == x && c.y == y;
 	}
-	// TODO Later if really necessary
+	
 	public Object clone() {
 		try {
 			return super.clone();
 		} catch (CloneNotSupportedException e) { return null; }
 	}
-	// TODO Later dont know if needed
+	
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}

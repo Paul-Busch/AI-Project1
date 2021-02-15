@@ -33,6 +33,7 @@ public class MyAgent implements Agent {
 	 */
     public String nextAction(int[] lastMove) {
     	if (lastMove != null) {
+			//we take the coordin
     		int x1 = lastMove[0], y1 = lastMove[1], x2 = lastMove[2], y2 = lastMove[3];
     		String roleOfLastPlayer;
     		if (myTurnAgent && role.equals("white") || !myTurnAgent && role.equals("black")) {

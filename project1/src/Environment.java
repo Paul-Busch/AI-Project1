@@ -397,6 +397,6 @@ public class Environment {
 		}else if(state.opponentPawns.isEmpty()){
 			return 100; 
 		}
-		return 0; //TODO only for debug reasons
+		return 0; 
 	}
 }
